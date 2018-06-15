@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/tel"
+            android:icon="@mipmap/tel"
+            android:title="@string/tel" />
+        <item
+            android:id="@+id/sms"
+            android:icon="@mipmap/sms"
+            android:title="@string/sms" />
+        <item
+            android:id="@+id/soft"
+            android:icon="@mipmap/soft"
+            android:title="@string/soft" />
+        <item
+            android:id="@+id/pic"
+            android:icon="@mipmap/image"
+            android:title="@string/pic" />
+        <item
+            android:id="@+id/music"
+            android:icon="@mipmap/music3"
+            android:title="@string/music" />
+
+        <item
+            android:id="@+id/video"
+            android:icon="@mipmap/video"
+            android:title="@string/video" />
+
+        <item
+            android:id="@+id/weather"
+            android:icon="@mipmap/weather"
+            android:title="@string/weather" />
+
+        <item
+            android:id="@+id/error"
+            android:icon="@mipmap/error"
+            android:title="@string/errorNote" />
+    </group>
+
+</menu>

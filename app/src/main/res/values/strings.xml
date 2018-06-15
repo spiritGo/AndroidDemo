@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">AndroidDemo</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">AndroidDemo</string>
+    <string name="nav_header_subtitle">1194501891@qq.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="tel">电话</string>
+    <string name="sms">短信</string>
+    <string name="timeStyle">yyyy-MM-dd HH:mm:ss</string>
+    <string name="image">image</string>
+    <string name="empty" />
+    <string name="send">发送</string>
+    <string name="soft">应用</string>
+    <string name="detail">详情</string>
+    <string name="pic">图片</string>
+    <string name="music">音乐</string>
+    <string name="video">电影</string>
+    <string name="communicate">Communicate</string>
+    <string name="share">Share</string>
+    <string name="weather">天气</string>
+    <string name="noMusic">你的歌被吸入外太空了吧</string>
+    <string name="noPic">你还没有图片哦！</string>
+    <string name="noSms">你还没有短信！</string>
+    <string name="noSoft">你还没有软件</string>
+    <string name="noTel">你还没有联系人</string>
+    <string name="noVideo">你还没有电影</string>
+    <string name="inputCity">请输入城市</string>
+    <string name="error">在这里收集了在本机发生的一些应用异常</string>
+    <string name="errorNote">错误</string>
+    <string name="loading">加载中…</string>
+</resources>
