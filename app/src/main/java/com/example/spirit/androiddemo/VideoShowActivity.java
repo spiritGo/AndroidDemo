@@ -170,13 +170,11 @@ public class VideoShowActivity extends Activity implements View.OnClickListener 
         smallWin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO
                 Intent intent = new Intent(VideoShowActivity.this, VideoService.class);
                 intent.putExtra(ConstanceField.PATH, path);
                 startService(intent);
                 SPUtil.putInt(SPUtil.VIDEO_CURRENT_POSITION, vvVideo.getCurrentPosition());
                 finish();
-                System.out.println("click");
             }
         });
     }
@@ -259,6 +257,5 @@ public class VideoShowActivity extends Activity implements View.OnClickListener 
         vvVideo.pause();
         handler.removeCallbacksAndMessages(null);
         timer.purge();
-        System.out.println("onDestroy");
     }
 }

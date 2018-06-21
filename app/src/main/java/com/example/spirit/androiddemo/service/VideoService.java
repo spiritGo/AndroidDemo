@@ -48,7 +48,6 @@ public class VideoService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         path = intent.getStringExtra(ConstanceField.PATH);
-        System.out.println("onStartCommand");
         return super.onStartCommand(intent, flags, startId);
     }
 
