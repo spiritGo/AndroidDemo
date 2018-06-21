@@ -22,7 +22,9 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import com.example.spirit.androiddemo.service.VideoService;
 import com.example.spirit.androiddemo.utils.ConstanceField;
+import com.example.spirit.androiddemo.utils.SPUtil;
 import com.example.spirit.androiddemo.utils.Util;
 
 import java.util.Timer;
@@ -51,6 +53,8 @@ public class VideoShowActivity extends Activity implements View.OnClickListener 
     private Timer timer;
     private int top;
     private int bottom;
+    private ImageView smallWin;
+    private String path;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -76,12 +80,13 @@ public class VideoShowActivity extends Activity implements View.OnClickListener 
         ivPlay = findViewById(R.id.iv_play);
         sbBar = findViewById(R.id.sb_bar);
         tvDuration = findViewById(R.id.tv_duration);
+        smallWin = findViewById(R.id.smallWin);
     }
 
     private void initVariable() {
         Intent intent = getIntent();
         title = intent.getStringExtra(ConstanceField.TITLE);
-        String path = intent.getStringExtra(ConstanceField.PATH);
+        path = intent.getStringExtra(ConstanceField.PATH);
         vvVideo.setVideoPath(path);
     }
 
@@ -158,6 +163,20 @@ public class VideoShowActivity extends Activity implements View.OnClickListener 
                     hideStatus();
                 }
                 return false;
+            }
+        });
+
+        smallWin.setColorFilter(Color.WHITE);
+        smallWin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO
+                Intent intent = new Intent(VideoShowActivity.this, VideoService.class);
+                intent.putExtra(ConstanceField.PATH, path);
+                startService(intent);
+                SPUtil.putInt(SPUtil.VIDEO_CURRENT_POSITION, vvVideo.getCurrentPosition());
+                finish();
+                System.out.println("click");
             }
         });
     }
@@ -240,5 +259,6 @@ public class VideoShowActivity extends Activity implements View.OnClickListener 
         vvVideo.pause();
         handler.removeCallbacksAndMessages(null);
         timer.purge();
+        System.out.println("onDestroy");
     }
 }

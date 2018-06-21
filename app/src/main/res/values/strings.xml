@@ -30,4 +30,13 @@
     <string name="error">在这里收集了在本机发生的一些应用异常</string>
     <string name="errorNote">错误</string>
     <string name="loading">加载中…</string>
+    <string name="capture">拍照</string>
+    <string name="preview">预览</string>
+    <string name="updateInfo">
+        更新内容：\n
+        \t1.新添天气界面更新按钮缩放动画\n
+        \t2.新添拍照功能\n
+        \t3.新添视频窗口播放\n
+    </string>
+    <string name="know">知道了</string>
 </resources>

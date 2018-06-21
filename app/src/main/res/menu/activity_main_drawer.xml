@@ -36,9 +36,15 @@
             android:title="@string/weather" />
 
         <item
+            android:id="@+id/capture"
+            android:icon="@mipmap/capture"
+            android:title="@string/capture" />
+
+        <item
             android:id="@+id/error"
             android:icon="@mipmap/error"
             android:title="@string/errorNote" />
+
     </group>
 
 </menu>

@@ -12,6 +12,10 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-feature android:name="android.hardware.camera" />
 
     <application
         android:name=".MyApplication"
@@ -38,6 +42,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <service android:name=".service.MusicService" />
+        <service android:name=".service.VideoService" />
     </application>
 
 </manifest>

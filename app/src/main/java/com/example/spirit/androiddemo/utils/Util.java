@@ -2,12 +2,16 @@ package com.example.spirit.androiddemo.utils;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.example.spirit.androiddemo.MyApplication;
@@ -189,6 +193,31 @@ public class Util {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static Point getWindowSize() {
+        WindowManager wm = (WindowManager) getMContext().getSystemService(Context.WINDOW_SERVICE);
+        if (wm != null) {
+            int width = wm.getDefaultDisplay().getWidth();
+            int height = wm.getDefaultDisplay().getHeight();
+            Point point = new Point();
+            point.x = width;
+            point.y = height;
+            return point;
+        }
+        return null;
+    }
+
+    public static String getVersionName() {
+        PackageManager packageManager = getMContext().getPackageManager();
+        try {
+            PackageInfo packageInfo = packageManager.getPackageInfo(getMContext().getPackageName
+                    (), 0);
+            return packageInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

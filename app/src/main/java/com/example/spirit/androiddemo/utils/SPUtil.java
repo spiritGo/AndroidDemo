@@ -10,6 +10,9 @@ public class SPUtil {
     final public static String FAILED = "failed";
     final public static String ERROR = "error";
     final private static String NAME = "info.txt";
+    final public static String VERSION_NAME = "version_name";
+    final public static String VIDEO_CURRENT_POSITION = "video_current_position";
+
     final private static SharedPreferences SP = Util.getMContext().getSharedPreferences(NAME,
             Context.MODE_PRIVATE);
 
@@ -27,5 +30,13 @@ public class SPUtil {
 
     public static boolean getBoolean(String key, boolean defValue) {
         return SP.getBoolean(key, defValue);
+    }
+
+    public static void putInt(String key, int value) {
+        SP.edit().putInt(key, value).apply();
+    }
+
+    public static int getInt(String key, int defValue) {
+        return SP.getInt(key, defValue);
     }
 }

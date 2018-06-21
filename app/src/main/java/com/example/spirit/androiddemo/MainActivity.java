@@ -77,8 +77,10 @@ public class MainActivity extends AppCompatActivity
             changePage(R.string.video, 5);
         } else if (id == R.id.weather) {
             changePage(R.string.weather, 6);
-        } else if (id == R.id.error) {
-            changePage(R.string.errorNote, 7);
+        } else if (id == R.id.capture) {
+            changePage(R.string.capture, 7);
+        }else if (id == R.id.error) {
+            changePage(R.string.errorNote, 8);
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;

@@ -17,6 +17,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -124,6 +126,7 @@ public class WeatherFragment extends Fragment {
                         @Override
                         public void onClick(View v) {
                             String s = etCity.getText().toString();
+                            startAnimation(v);
                             if (!s.equals(city)) {
                                 SPUtil.putString(SPUtil.CITY, s);
                                 updateData();
@@ -144,6 +147,34 @@ public class WeatherFragment extends Fragment {
             }
         };
         threadUtil.newStartThread();
+    }
+
+    private void startAnimation(final View view) {
+        ScaleAnimation scaleAnimation = new ScaleAnimation(1f, 1.2f, 1f, 1.2f, Animation
+                .RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        scaleAnimation.setDuration(350);
+        scaleAnimation.setFillAfter(true);
+        view.startAnimation(scaleAnimation);
+        scaleAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                ScaleAnimation scaleAnimation = new ScaleAnimation(1.2f, 1f, 1.2f, 1f, Animation
+                        .RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                scaleAnimation.setDuration(350);
+                scaleAnimation.setFillAfter(true);
+                view.startAnimation(scaleAnimation);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
     }
 
     @Override

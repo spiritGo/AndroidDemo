@@ -12,6 +12,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 
 import com.example.spirit.androiddemo.R;
+import com.example.spirit.androiddemo.fragment.CaptureFragment;
 import com.example.spirit.androiddemo.fragment.ErrorFragment;
 import com.example.spirit.androiddemo.fragment.MusicFragment;
 import com.example.spirit.androiddemo.fragment.PicFragment;
@@ -54,6 +55,7 @@ public class DataUtil {
             fragments.add(new MusicFragment());
             fragments.add(new VideoFragment());
             fragments.add(new WeatherFragment());
+            fragments.add(new CaptureFragment());
             fragments.add(new ErrorFragment());
         }
         return fragments.get(index);

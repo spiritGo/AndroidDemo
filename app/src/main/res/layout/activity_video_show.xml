@@ -27,12 +27,23 @@
 
         <TextView
             android:id="@+id/tv_title"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:ellipsize="end"
             android:singleLine="true"
             android:textColor="#fff"
             android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/smallWin"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:contentDescription="@string/image"
+            android:scaleType="centerInside"
+            android:src="@mipmap/small_win" />
     </LinearLayout>
 
     <LinearLayout
