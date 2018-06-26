@@ -33,10 +33,15 @@
     <string name="capture">拍照</string>
     <string name="preview">预览</string>
     <string name="updateInfo">
-        更新内容：\n
-        \t1.新添天气界面更新按钮缩放动画\n
-        \t2.新添拍照功能\n
-        \t3.新添视频窗口播放\n
+        <!--\t1.新添天气界面更新按钮缩放动画\n-->
+        <!--\t2.新添拍照功能\n-->
+        <!--\t3.新添视频窗口播放\n-->
+        1.增加预览图片缩放拖拽功能\n\n
+        2.增加音乐标志功能，标志正在播放的歌曲\n\n
+        3.增加音乐记录功能，记录退出时播放的歌曲，下次进入时标志上次播放音乐\n\n
+        4.通知栏同步标志\n\n
+        5.增加音乐快速定位上次播放歌曲\n\n
     </string>
     <string name="know">知道了</string>
+    <string name="updateTitle">更新内容</string>
 </resources>

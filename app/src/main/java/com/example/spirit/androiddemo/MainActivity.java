@@ -2,6 +2,7 @@ package com.example.spirit.androiddemo;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.internal.NavigationMenuView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -48,6 +49,14 @@ public class MainActivity extends AppCompatActivity
         toolbar = findViewById(R.id.toolbar);
         drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
+
+        if (navigationView != null) {
+            NavigationMenuView navigationMenuView = (NavigationMenuView) navigationView
+                    .getChildAt(0);
+            if (navigationMenuView != null) {
+                navigationMenuView.setVerticalScrollBarEnabled(false);
+            }
+        }
     }
 
     @Override
@@ -79,7 +88,7 @@ public class MainActivity extends AppCompatActivity
             changePage(R.string.weather, 6);
         } else if (id == R.id.capture) {
             changePage(R.string.capture, 7);
-        }else if (id == R.id.error) {
+        } else if (id == R.id.error) {
             changePage(R.string.errorNote, 8);
         }
         drawer.closeDrawer(GravityCompat.START);

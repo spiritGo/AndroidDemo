@@ -16,9 +16,11 @@ import android.support.v4.app.NotificationCompat;
 import android.widget.RemoteViews;
 
 import com.example.spirit.androiddemo.R;
+import com.example.spirit.androiddemo.fragment.MusicFragment;
 import com.example.spirit.androiddemo.interfaces.OnMusicCompletionListener;
 import com.example.spirit.androiddemo.modle.MusicBean;
 import com.example.spirit.androiddemo.utils.MediaPlayerUtil;
+import com.example.spirit.androiddemo.utils.SPUtil;
 import com.example.spirit.androiddemo.utils.Util;
 
 import java.util.ArrayList;
@@ -61,6 +63,7 @@ public class MusicService extends Service {
     private void initVariable() {
         registerMusicBroadCast();
         mediaPlayerUtil = MediaPlayerUtil.getMediaPlayerUtil();
+        currentItem = SPUtil.getInt(MediaPlayerUtil.CURRENT_ITEM, 0);
     }
 
     private void initUI() {
@@ -70,7 +73,9 @@ public class MusicService extends Service {
             @Override
             public void onMusicCompletion() {
                 next();
+                SPUtil.putInt(MediaPlayerUtil.CURRENT_ITEM, currentItem);
                 remoteViewSet();
+                MusicFragment.getMusicFragment().setCurrentItem(currentItem);
             }
         });
     }
@@ -105,6 +110,7 @@ public class MusicService extends Service {
     }
 
     private void remoteViewSet() {
+        currentItem = SPUtil.getInt(MediaPlayerUtil.CURRENT_ITEM, 0);
         remoteViews.setTextViewText(R.id.tv_title, musicBeans.get(currentItem).getMusicName());
         remoteViews.setTextViewText(R.id.tv_duration, mediaPlayerUtil.getCurrentDuration());
         remoteViews.setOnClickPendingIntent(R.id.iv_prev, PendingIntent.getBroadcast(Util
@@ -180,6 +186,8 @@ public class MusicService extends Service {
             String action = intent.getAction();
             if (MediaPlayerUtil.RESTART_ACTION.equals(action)) {
                 musicRestart(intent);
+                SPUtil.putInt(MediaPlayerUtil.CURRENT_ITEM, currentItem);
+                MusicFragment.getMusicFragment().setCurrentItem(currentItem);
                 handler.sendEmptyMessageDelayed(0, 350);
             } else if (MediaPlayerUtil.START_ACTION.equals(action)) {
                 mediaPlayerUtil.start();
@@ -192,8 +200,12 @@ public class MusicService extends Service {
                 handler.removeCallbacksAndMessages(null);
             } else if (MediaPlayerUtil.NEXT_ACTION.equals(action)) {
                 next();
+                SPUtil.putInt(MediaPlayerUtil.CURRENT_ITEM, currentItem);
+                MusicFragment.getMusicFragment().setCurrentItem(currentItem);
             } else if (MediaPlayerUtil.PREV_ACTION.equals(action)) {
                 prev();
+                SPUtil.putInt(MediaPlayerUtil.CURRENT_ITEM, currentItem);
+                MusicFragment.getMusicFragment().setCurrentItem(currentItem);
             }
 
             remoteViewSet();

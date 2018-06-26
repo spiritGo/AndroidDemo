@@ -30,11 +30,11 @@
             android:textSize="16sp" />
     </RelativeLayout>
 
-    <ImageView
+    <com.example.spirit.androiddemo.views.ScaleDragImageView
         android:id="@+id/iv_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:contentDescription="@string/image"
-        android:scaleType="centerInside" />
+        android:scaleType="matrix" />
 </LinearLayout>

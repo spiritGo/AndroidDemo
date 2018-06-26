@@ -22,6 +22,7 @@ import com.example.spirit.androiddemo.service.MusicService;
 import com.example.spirit.androiddemo.utils.DataUtil;
 import com.example.spirit.androiddemo.utils.Dialog;
 import com.example.spirit.androiddemo.utils.MediaPlayerUtil;
+import com.example.spirit.androiddemo.utils.SPUtil;
 import com.example.spirit.androiddemo.utils.ThreadUtil;
 import com.example.spirit.androiddemo.utils.Util;
 
@@ -31,6 +32,8 @@ public class MusicFragment extends Fragment {
     private RecyclerView rvMusic;
     private LinearLayoutManager layoutManager;
     private FragmentActivity activity;
+    private MyAdapter myAdapter;
+    private static MusicFragment fragment;
 
     @Nullable
     @Override
@@ -51,6 +54,7 @@ public class MusicFragment extends Fragment {
     private void initVariable() {
         activity = getActivity();
         layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        fragment = MusicFragment.this;
     }
 
     private void initUI() {
@@ -79,12 +83,23 @@ public class MusicFragment extends Fragment {
                 rvMusic.setLayoutManager(layoutManager);
                 rvMusic.addItemDecoration(new DividerItemDecoration(activity,
                         DividerItemDecoration.VERTICAL));
-                MyAdapter myAdapter = new MyAdapter(list);
+                myAdapter = new MyAdapter(list);
+                myAdapter.setCurrentItem(SPUtil.getInt(MediaPlayerUtil.CURRENT_ITEM, 0));
                 rvMusic.setAdapter(myAdapter);
+                rvMusic.scrollToPosition(SPUtil.getInt(MediaPlayerUtil.CURRENT_ITEM, 0));
                 Dialog.dismiss();
             }
         };
         threadUtil.newStartThread();
+    }
+
+    public static MusicFragment getMusicFragment (){
+        return fragment;
+    }
+
+    public void setCurrentItem(int currentItem){
+        myAdapter.setCurrentItem(currentItem);
+        myAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -96,6 +111,7 @@ public class MusicFragment extends Fragment {
     class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         private ArrayList<MusicBean> musicBeans;
+        private int currentItem;
 
         MyAdapter(ArrayList<MusicBean> musicBeans) {
             this.musicBeans = musicBeans;
@@ -114,6 +130,12 @@ public class MusicFragment extends Fragment {
             MusicBean musicBean = musicBeans.get(position);
             holder.tvTitle.setText(musicBean.getMusicName());
             holder.tvArtist.setText(musicBean.getArtist());
+            holder.ivIcon.setImageResource(R.mipmap.music2);
+
+            if (position==currentItem){
+                holder.ivIcon.setImageResource(R.mipmap.isplaying);
+            }
+
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -124,6 +146,10 @@ public class MusicFragment extends Fragment {
                     }
                 }
             });
+        }
+
+        void setCurrentItem(int currentItem) {
+            this.currentItem = currentItem;
         }
 
         @Override
