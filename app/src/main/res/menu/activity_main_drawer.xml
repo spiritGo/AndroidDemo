@@ -41,6 +41,16 @@
             android:title="@string/capture" />
 
         <item
+            android:id="@+id/file"
+            android:icon="@mipmap/folder"
+            android:title="@string/folder" />
+
+        <item
+            android:id="@+id/health"
+            android:icon="@mipmap/health"
+            android:title="@string/health" />
+
+        <item
             android:id="@+id/error"
             android:icon="@mipmap/error"
             android:title="@string/errorNote" />

@@ -14,6 +14,8 @@ import android.support.v4.app.Fragment;
 import com.example.spirit.androiddemo.R;
 import com.example.spirit.androiddemo.fragment.CaptureFragment;
 import com.example.spirit.androiddemo.fragment.ErrorFragment;
+import com.example.spirit.androiddemo.fragment.FolderFragment;
+import com.example.spirit.androiddemo.fragment.HealthFragment;
 import com.example.spirit.androiddemo.fragment.MusicFragment;
 import com.example.spirit.androiddemo.fragment.PicFragment;
 import com.example.spirit.androiddemo.fragment.SmsFragment;
@@ -56,6 +58,8 @@ public class DataUtil {
             fragments.add(new VideoFragment());
             fragments.add(new WeatherFragment());
             fragments.add(new CaptureFragment());
+            fragments.add(new FolderFragment());
+            fragments.add(new HealthFragment());
             fragments.add(new ErrorFragment());
         }
         return fragments.get(index);

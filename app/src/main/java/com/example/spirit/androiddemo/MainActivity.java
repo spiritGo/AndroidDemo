@@ -1,5 +1,7 @@
 package com.example.spirit.androiddemo;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.internal.NavigationMenuView;
@@ -13,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.example.spirit.androiddemo.fragment.FolderFragment;
 import com.example.spirit.androiddemo.utils.DataUtil;
 
 public class MainActivity extends AppCompatActivity
@@ -59,14 +62,14 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
+//    @Override
+//    public void onBackPressed() {
+//        if (drawer.isDrawerOpen(GravityCompat.START)) {
+//            drawer.closeDrawer(GravityCompat.START);
+//        } else {
+//            super.onBackPressed();
+//        }
+//    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -88,8 +91,12 @@ public class MainActivity extends AppCompatActivity
             changePage(R.string.weather, 6);
         } else if (id == R.id.capture) {
             changePage(R.string.capture, 7);
+        } else if (id == R.id.file) {
+            changePage(R.string.folder, 8);
+        } else if (id == R.id.health) {
+            changePage(R.string.health, 9);
         } else if (id == R.id.error) {
-            changePage(R.string.errorNote, 8);
+            changePage(R.string.errorNote, 10);
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -104,4 +111,27 @@ public class MainActivity extends AppCompatActivity
         fragmentManager.beginTransaction().setCustomAnimations(R.anim.alpha_in, R.anim.alpha_out)
                 .replace(R.id.fl_container, fragment).commit();
     }
+
+    @Override
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else if (FolderFragment.getFoldFragemnt().onBackPressed()) {
+            FolderFragment.getFoldFragemnt().backRootFile();
+        } else {
+            new AlertDialog.Builder(this)
+                    .setTitle("提示：")
+                    .setIcon(R.mipmap.ic_launcher)
+                    .setMessage("确定要退出吗！")
+                    .setNegativeButton("退出", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    })
+                    .setPositiveButton("等等吧！", null)
+                    .show();
+        }
+    }
+
 }

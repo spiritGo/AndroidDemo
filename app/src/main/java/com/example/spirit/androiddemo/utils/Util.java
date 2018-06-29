@@ -1,6 +1,8 @@
 package com.example.spirit.androiddemo.utils;
 
+import android.app.ActivityManager;
 import android.app.AlertDialog;
+import android.app.AppOpsManager;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -9,6 +11,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Binder;
+import android.support.v4.content.ContextCompat;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.WindowManager;
@@ -16,11 +20,15 @@ import android.widget.Toast;
 
 import com.example.spirit.androiddemo.MyApplication;
 import com.example.spirit.androiddemo.R;
+import com.example.spirit.androiddemo.modle.FileBean;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Util {
 
@@ -218,6 +226,73 @@ public class Util {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static boolean lacksPermission(String permission) {
+        return ContextCompat.checkSelfPermission(getMContext(), permission) == PackageManager
+                .PERMISSION_DENIED;
+    }
+
+    public static boolean checkAlertWindowsPermission(Context context) {
+        try {
+            Object object = context.getSystemService(Context.APP_OPS_SERVICE);
+            if (object == null) {
+                return false;
+            }
+            Class localClass = object.getClass();
+            Class[] arrayOfClass = new Class[3];
+            arrayOfClass[0] = Integer.TYPE;
+            arrayOfClass[1] = Integer.TYPE;
+            arrayOfClass[2] = String.class;
+            Method method = localClass.getMethod("checkOp", arrayOfClass);
+            if (method == null) {
+                return false;
+            }
+            Object[] arrayOfObject1 = new Object[3];
+            arrayOfObject1[0] = 24;
+            arrayOfObject1[1] = Binder.getCallingUid();
+            arrayOfObject1[2] = context.getPackageName();
+            int m = ((Integer) method.invoke(object, arrayOfObject1));
+            return m == AppOpsManager.MODE_ALLOWED;
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return false;
+    }
+
+    public static boolean isServiceRunning(String name) {
+        ActivityManager activityManager = (ActivityManager) getMContext().getSystemService
+                (Context.ACTIVITY_SERVICE);
+        if (activityManager != null) {
+            List<ActivityManager.RunningServiceInfo> runningTasks = activityManager
+                    .getRunningServices(100);
+            if (runningTasks != null) {
+                for (ActivityManager.RunningServiceInfo info : runningTasks) {
+                    if (info.service.getClassName().equals(name)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+
+    }
+
+    public static ArrayList<FileBean> fileScan(File file) {
+        File[] files = file.listFiles();
+        if (files == null) return null;
+        ArrayList<FileBean> fileBeans = new ArrayList<>();
+        for (File fileItem : files) {
+            FileBean fileBean = new FileBean();
+            if (fileItem.isDirectory()) {
+                fileBean.setType(ConstanceField.DIRECTORY);
+            } else {
+                fileBean.setType(ConstanceField.NOT_DIRECTORY);
+            }
+            fileBean.setFile(fileItem);
+            fileBeans.add(fileBean);
+        }
+        return fileBeans;
     }
 
 }

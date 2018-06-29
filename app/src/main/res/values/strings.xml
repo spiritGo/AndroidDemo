@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AndroidDemo</string>
+    <string name="app_name">应用大杂烩</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">AndroidDemo</string>
@@ -44,4 +44,6 @@
     </string>
     <string name="know">知道了</string>
     <string name="updateTitle">更新内容</string>
+    <string name="folder">文件</string>
+    <string name="health">健康</string>
 </resources>

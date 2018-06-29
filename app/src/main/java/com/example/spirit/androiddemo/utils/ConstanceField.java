@@ -6,5 +6,7 @@ public class ConstanceField {
     final public static String ADDRESS = "address";
     final public static String PATH = "path";
     final public static String TITLE = "title";
+    final public static String DIRECTORY = "directory";
+    final public static String NOT_DIRECTORY = "not_directory";
 
 }

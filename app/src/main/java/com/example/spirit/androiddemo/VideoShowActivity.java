@@ -2,10 +2,13 @@ package com.example.spirit.androiddemo;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -42,6 +45,8 @@ public class VideoShowActivity extends Activity implements View.OnClickListener 
     private TextView tvDuration;
     private MediaPlayer player;
     private boolean isStatusVisible = true;
+    private boolean isPlaying = false;
+    private boolean ServiceIsOpen = false;
 
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
@@ -90,6 +95,17 @@ public class VideoShowActivity extends Activity implements View.OnClickListener 
         vvVideo.setVideoPath(path);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (isPlaying) {
+            ivPlay.setImageResource(R.mipmap.pause);
+        } else {
+            ivPlay.setImageResource(R.mipmap.play);
+        }
+        System.out.println("onResume");
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     private void initUI() {
         ivExit.setOnClickListener(this);
@@ -97,15 +113,13 @@ public class VideoShowActivity extends Activity implements View.OnClickListener 
         ivExit.setColorFilter(Color.WHITE);
         tvTitle.setText(title);
         vvVideo.start();
+        isPlaying = true;
 
         vvVideo.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
                 setPlayer(mp);
                 sbBar.setMax(vvVideo.getDuration());
-                if (vvVideo.canPause()) {
-                    ivPlay.setImageResource(R.mipmap.pause);
-                }
                 updateProgress();
             }
         });
@@ -170,13 +184,47 @@ public class VideoShowActivity extends Activity implements View.OnClickListener 
         smallWin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(VideoShowActivity.this, VideoService.class);
-                intent.putExtra(ConstanceField.PATH, path);
-                startService(intent);
-                SPUtil.putInt(SPUtil.VIDEO_CURRENT_POSITION, vvVideo.getCurrentPosition());
-                finish();
+                if (Util.checkAlertWindowsPermission(getApplicationContext())) {
+                    openWindow();
+                } else {
+                    new AlertDialog.Builder(VideoShowActivity.this)
+                            .setIcon(R.mipmap.ic_launcher)
+                            .setTitle("请设置权限")
+                            .setMessage("使用该功能需要设置悬浮窗功能才能使用，是否前去设置")
+                            .setPositiveButton("去设置", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    pause();
+                                    handler.removeCallbacksAndMessages(null);
+                                    Intent intent = new Intent();
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    intent.setAction("android.settings" + "" +
+                                            ".APPLICATION_DETAILS_SETTINGS");
+                                    intent.setData(Uri.fromParts("package", getPackageName(),
+                                            null));
+                                    startActivity(intent);
+                                    SPUtil.putInt(SPUtil.VIDEO_CURRENT_POSITION, vvVideo
+                                            .getCurrentPosition());
+                                }
+                            })
+                            .setNegativeButton("算了吧", null)
+                            .show();
+                }
             }
         });
+    }
+
+    private void openWindow() {
+        Intent intent = new Intent(VideoShowActivity.this, VideoService.class);
+        intent.putExtra(ConstanceField.PATH, path);
+        SPUtil.putInt(SPUtil.VIDEO_CURRENT_POSITION, vvVideo.getCurrentPosition());
+        System.out.println(Util.isServiceRunning(VideoService.class.getName()));
+        System.out.println(VideoService.class.getName());
+        if (Util.isServiceRunning(VideoService.class.getName())) {
+            stopService(intent);
+        }
+        startService(intent);
+        finish();
     }
 
     private void showStatus() {
@@ -242,12 +290,14 @@ public class VideoShowActivity extends Activity implements View.OnClickListener 
     private void start() {
         if (!player.isPlaying()) {
             vvVideo.start();
+            isPlaying = true;
         }
     }
 
     private void pause() {
         if (player.isPlaying()) {
             vvVideo.pause();
+            isPlaying = false;
         }
     }
 
