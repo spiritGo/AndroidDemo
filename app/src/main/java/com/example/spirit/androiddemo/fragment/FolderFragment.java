@@ -2,7 +2,6 @@ package com.example.spirit.androiddemo.fragment;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -25,7 +24,8 @@ import java.util.ArrayList;
 
 public class FolderFragment extends Fragment {
     private RecyclerView rvFolder;
-    final private String rootName = Environment.getExternalStorageDirectory().getName() + "/";
+    // final private String rootName = Environment.getExternalStorageDirectory().getName() + "/";
+    final private String rootName = "/";
     private File file;
     private MyAdapter myAdapter;
     private static FolderFragment folderFragment;
@@ -136,7 +136,11 @@ public class FolderFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     file = fileBean.getFile();
-                    update();
+                    if (ConstanceField.DIRECTORY.equals(fileBean.getType())) {
+                        update();
+                    } else {
+                        Util.openFile(file);
+                    }
                 }
             });
         }
